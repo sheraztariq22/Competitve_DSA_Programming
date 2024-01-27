@@ -59,6 +59,48 @@ public:
         }
     }
 
+    void deletion(node *&head, int val)
+    {
+        node *temp = head;
+
+        while (temp->next->data != val)
+        {
+            temp = temp->next;
+        }
+
+        node *del = temp->next;
+        temp->next = temp->next->next;
+        delete del;
+    }
+
+    void deleteAtHead(node *&head, int val)
+    {
+        node *temp = head;
+        temp = head;
+        head = temp->next;
+
+        delete temp;
+    }
+
+    node *reverseLinkedlist(node *&head)
+    {
+        node *prevPtr = NULL;
+        node *currPtr = head;
+        node *nextPtr;
+
+        while (currPtr != NULL)
+        {
+            nextPtr = currPtr->next;
+            currPtr->next = prevPtr;
+
+            // reverse ka logic
+            prevPtr = currPtr;
+            currPtr = nextPtr;
+        }
+
+        return prevPtr;
+    }
+
     void display(node *head)
     {
         node *temp = head;
@@ -75,14 +117,25 @@ int main()
 {
     node n1(4);
     node *head = NULL;
-    n1.insertatHead(head, 7);
     n1.insertatHead(head, 0);
-    n1.insertatTail(head, 3);
     n1.insertatTail(head, 4);
+    n1.insertatTail(head, 3);
     n1.insertatTail(head, 5);
 
-    n1.searchKey(head, 9);
+    cout << "insertion in linked list:" << endl;
+    n1.display(head);
+    cout << "Reverse a linked list:" << endl;
+    node *newhead = n1.reverseLinkedlist(head);
+    n1.display(newhead);
+    cout << "Searching in linked list:" << endl;
+    n1.searchKey(head, 4);
+    cout << "Deletion at any point except head:" << endl;
+    n1.deletion(head, 5);
 
+    n1.display(head);
+
+    cout << "Deletion ad head:" << endl;
+    n1.deleteAtHead(head, 0);
     n1.display(head);
 
     return 0;
